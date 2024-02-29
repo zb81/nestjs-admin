@@ -8,6 +8,7 @@ module.exports = antfu({
   typescript: true,
 }, {
   rules: {
+    'no-console': 'off',
     'unused-imports/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 2,
 
@@ -20,7 +21,7 @@ module.exports = antfu({
       {
         'pathGroups': [
           {
-            pattern: '@/**',
+            pattern: '~/**',
             group: 'external',
             position: 'after',
           },

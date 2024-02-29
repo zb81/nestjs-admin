@@ -1,3 +1,9 @@
-- [ ] ESLint、Husky、Commitlint
+- [x] ESLint、Git Hook
 - [ ] ConfigService 读取不同环境变量
-- [ ] 登录、JWT
+- [ ] 日志
+- [ ] TypeORM (MySQL)
+- [ ] Redis
+- [ ] Swagger
+- [ ] 邮件发送
+- [ ] 验证码
+- [ ] 登录、JWT 签发
