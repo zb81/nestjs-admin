@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
 
 import { NestJSAdminConfigs } from '~/config'
+import { SharedModule } from '~/modules/shared/shared.module'
 
 import { AppController } from './app.controller'
 
@@ -16,6 +17,7 @@ import { AppController } from './app.controller'
       envFilePath: [`.env.${process.env.NODE_ENV}`, '.env'],
       load: NestJSAdminConfigs,
     }),
+    SharedModule,
   ],
   controllers: [AppController],
 })

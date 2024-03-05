@@ -1,7 +1,9 @@
+import { Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 
 import { IAppConfig } from '~/config/app.config'
+import { LoggerService } from '~/modules/shared/logger/logger.service'
 
 import { AppModule } from './app.module'
 
@@ -13,7 +15,12 @@ async function bootstrap() {
 
   app.setGlobalPrefix(globalPrefix)
 
-  await app.listen(port)
+  await app.listen(port, () => {
+    app.useLogger(app.get(LoggerService))
+
+    const logger = new Logger('NestJS Admin')
+    logger.log(`🚀 Listening at http://localhost:${port}${globalPrefix}`)
+  })
 }
 
 bootstrap()
