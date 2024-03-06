@@ -3,7 +3,7 @@
 - [x] 日志 (winston)
 - [x] TypeORM (MySQL)
 - [x] ioredis
-- [ ] 邮件
+- [ ] 邮件 (@nestjs-modules/mailer + nodemailer)
 - [ ] 验证码
 - [ ] Swagger
 - [ ] 登录、JWT 签发
