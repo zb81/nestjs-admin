@@ -1,18 +1,23 @@
 import { Controller, Get, Ip, Query } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 
-import { LoggerService } from '~/modules/shared/logger/logger.service'
+import { RedisService } from '~/modules/shared/redis/redis.service'
 
 @Controller()
 export class AppController {
   constructor(
     private readonly configService: ConfigService,
-    private readonly logger: LoggerService,
+    private readonly redisService: RedisService,
   ) { }
 
   @Get('config')
   getConfig(@Query('path') path: string, @Ip() ip: string): string {
-    this.logger.log(`getConfig from ${ip}: ${path}`, AppController.name)
     return this.configService.get(path)
+  }
+
+  @Get('foo')
+  async foo() {
+    await this.redisService.set('foo', 'asdfasdf', 5)
+    return { msg: 'ok' }
   }
 }

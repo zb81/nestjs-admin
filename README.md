@@ -2,8 +2,8 @@
 - [x] ConfigService 读取不同环境变量
 - [x] 日志 (winston)
 - [x] TypeORM (MySQL)
-- [ ] Redis
-- [ ] Swagger
+- [x] ioredis
 - [ ] 邮件
 - [ ] 验证码
+- [ ] Swagger
 - [ ] 登录、JWT 签发
