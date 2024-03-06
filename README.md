@@ -1,7 +1,7 @@
 - [x] ESLint、Git Hook
 - [x] ConfigService 读取不同环境变量
 - [x] 日志 (winston)
-- [ ] Prisma (MySQL)
+- [x] TypeORM (MySQL)
 - [ ] Redis
 - [ ] Swagger
 - [ ] 邮件

@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
 
 import { NestJSAdminConfigs } from '~/config'
+import { DatabaseModule } from '~/modules/shared/database/database.module'
 import { SharedModule } from '~/modules/shared/shared.module'
 
 import { AppController } from './app.controller'
@@ -18,6 +19,7 @@ import { AppController } from './app.controller'
       load: NestJSAdminConfigs,
     }),
     SharedModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
 })
