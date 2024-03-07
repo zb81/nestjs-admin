@@ -14,8 +14,8 @@
 ## 请求和响应
 
 - [x] 请求参数校验 (class-validator + class-transformer + ValidationPipe)
-- [x] 请求、响应日志打印，接口耗时 (log 拦截器)
+- [x] 请求、响应打印接口耗时 (log 拦截器)
 - [x] 响应数据包裹 (transform 拦截器，通过 `@PassTransform()` 跳过)
-- [ ] 全局错误处理
+- [x] 错误处理 (Exception filters)
 - [ ] Swagger
 - [ ] 登录、JWT 签发
