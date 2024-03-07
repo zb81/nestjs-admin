@@ -22,4 +22,9 @@ export class RedisService {
     if (ttl)
       await this.redis.expire(key, ttl)
   }
+
+  async del(key: string) {
+    this.logger.debug(`Delete ${key}`)
+    await this.redis.del(key)
+  }
 }

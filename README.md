@@ -6,4 +6,5 @@
 - [x] 邮件 (@nestjs-modules/mailer + nodemailer)
 - [ ] 验证码
 - [ ] Swagger
+- [ ]
 - [ ] 登录、JWT 签发

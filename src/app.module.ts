@@ -3,9 +3,8 @@ import { ConfigModule } from '@nestjs/config'
 import * as Joi from 'joi'
 
 import { NestJSAdminConfigs } from '~/config'
+import { AuthModule } from '~/modules/auth/auth.module'
 import { SharedModule } from '~/modules/shared/shared.module'
-
-import { AppController } from './app.controller'
 
 @Module({
   imports: [
@@ -18,7 +17,8 @@ import { AppController } from './app.controller'
       load: NestJSAdminConfigs,
     }),
     SharedModule,
+
+    AuthModule,
   ],
-  controllers: [AppController],
 })
 export class AppModule {}
