@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { MailerService as NestMailerService } from '@nestjs-modules/mailer'
 
 import { ConfigInPath } from '~/config'
+import { genEmailCodeKey, genEmailIpCountKey, genEmailIpForbiddenKey, genEmailToCountKey, genEmailToForbiddenKey } from '~/constants/redis-key'
 import { RedisService } from '~/modules/shared/redis/redis.service'
 import { randomValue } from '~/utils'
 import { getRemainSeconds } from '~/utils/date-time'
@@ -18,13 +19,13 @@ export class MailerService {
   ) { }
 
   async log(to: string, code: string, ip: string) {
-    await this.redis.set(`email:code:${to}`, code, 60 * 10)
-    await this.redis.set(`email:ip:${ip}:forbidden`, 1, 60)
-    await this.redis.set(`email:to:${to}:forbidden`, 1, 60)
+    await this.redis.set(genEmailCodeKey(to), code, 60 * 10)
+    await this.redis.set(genEmailIpForbiddenKey(ip), 1, 60)
+    await this.redis.set(genEmailToForbiddenKey(to), 1, 60)
 
     // 更新计数
-    const ipCountKey = `email:ip:${ip}:count`
-    const toCountKey = `email:to:${to}:count`
+    const ipCountKey = genEmailIpCountKey(ip)
+    const toCountKey = genEmailToCountKey(to)
     let ipCount: number | string = await this.redis.get(ipCountKey)
     ipCount = ipCount ? Number(ipCount) : 0
     let toCount: number | string = await this.redis.get(toCountKey)
@@ -35,17 +36,17 @@ export class MailerService {
 
   async checkLimit(to: string, ip: string) {
     // 同一 IP / 邮箱，60 秒内只能发送一次
-    const ipForbidden = await this.redis.get(`email:ip:${ip}:forbidden`)
+    const ipForbidden = await this.redis.get(genEmailIpForbiddenKey(ip))
     if (ipForbidden)
       throw new HttpException('请一分钟后再试', 429)
-    const toForbidden = await this.redis.get(`email:to:${to}:forbidden`)
+    const toForbidden = await this.redis.get(genEmailToForbiddenKey(to))
     if (toForbidden)
       throw new HttpException('请一分钟后再试', 429)
 
     // 同一 IP / 邮箱，每天最多发送 5 次
     const LIMIT = 5
-    const ipCountKey = `email:ip:${ip}:count`
-    const toCountKey = `email:to:${to}:count`
+    const ipCountKey = genEmailIpCountKey(ip)
+    const toCountKey = genEmailToCountKey(to)
     let ipCount: number | string = await this.redis.get(ipCountKey)
     ipCount = ipCount ? Number(ipCount) : 0
     if (ipCount >= LIMIT)
@@ -74,7 +75,7 @@ export class MailerService {
   }
 
   async checkCode(to: string, code: string) {
-    const key = `email:code:${to}`
+    const key = genEmailCodeKey(to)
     const res = await this.redis.get(key)
     if (res !== code)
       throw new HttpException('验证码不正确', 400)

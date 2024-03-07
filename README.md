@@ -4,7 +4,6 @@
 - [x] TypeORM (MySQL)
 - [x] ioredis
 - [x] 邮件 (@nestjs-modules/mailer + nodemailer)
-- [ ] 验证码
+- [x] 验证码 (邮件 + 图片)
 - [ ] Swagger
-- [ ]
 - [ ] 登录、JWT 签发
