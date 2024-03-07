@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common'
+import { HttpStatus, Logger, UnprocessableEntityException, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
 
@@ -14,6 +14,22 @@ async function bootstrap() {
   const { port, globalPrefix } = configService.get<IAppConfig>('app')
 
   app.setGlobalPrefix(globalPrefix)
+
+  // 全局校验
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    whitelist: true,
+    transformOptions: { enableImplicitConversion: true },
+    errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+    stopAtFirstError: true,
+    exceptionFactory: errors => new UnprocessableEntityException(
+      errors.map((e) => {
+        const rule = Object.keys(e.constraints!)[0]
+        const msg = e.constraints![rule]
+        return msg
+      })[0],
+    ),
+  }))
 
   await app.listen(port, () => {
     app.useLogger(app.get(LoggerService))

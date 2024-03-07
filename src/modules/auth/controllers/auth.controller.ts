@@ -4,6 +4,7 @@ import { Body, Controller, Get, Ip, Post } from '@nestjs/common'
 import { create } from 'svg-captcha'
 
 import { genCaptchaImgKey } from '~/constants/redis-key'
+import { SendEmailCodeDto } from '~/modules/auth/dto/auth.dto'
 import { MailerService } from '~/modules/shared/mailer/mailer.service'
 import { RedisService } from '~/modules/shared/redis/redis.service'
 
@@ -14,8 +15,8 @@ export class AuthController {
     private readonly redis: RedisService,
   ) {}
 
-  @Post('email/send')
-  async sendEmailCode(@Body() dto: { email: string }, @Ip() ip: string) {
+  @Post('email/code')
+  async sendEmailCode(@Body() dto: SendEmailCodeDto, @Ip() ip: string) {
     const { email } = dto
     await this.mailer.checkLimit(email, ip)
     const { code } = await this.mailer.sendVerificationCode(email)

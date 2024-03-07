@@ -5,5 +5,6 @@
 - [x] ioredis
 - [x] 邮件 (@nestjs-modules/mailer + nodemailer)
 - [x] 验证码 (邮件 + 图片)
+- [ ] 参数校验 (class-validator + class-transformer + ValidationPipe)
 - [ ] Swagger
 - [ ] 登录、JWT 签发
