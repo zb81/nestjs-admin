@@ -2,8 +2,8 @@ import { CallHandler, ExecutionContext, HttpStatus, Injectable, NestInterceptor 
 import { Reflector } from '@nestjs/core'
 import { Observable, map } from 'rxjs'
 
+import { BaseRes } from '~/common/response.model'
 import { PASS_TRANSFORM_KEY } from '~/decorators/pass-transform.decorator'
-import { BaseRes } from '~/models/response.model'
 
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {

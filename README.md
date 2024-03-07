@@ -17,5 +17,9 @@
 - [x] 请求、响应打印接口耗时 (log 拦截器)
 - [x] 响应数据包裹 (transform 拦截器，通过 `@PassTransform()` 跳过)
 - [x] 错误处理 (Exception filters)
-- [ ] Swagger
-- [ ] 登录、JWT 签发
+
+## 鉴权
+
+- [ ] 注册
+- [ ] 登录
+- [ ] 权限守卫 (JWT + permission)
