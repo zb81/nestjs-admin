@@ -17,9 +17,10 @@ export function buildTreeFromList<T extends Treeable>(list: T[]): WithChildren<T
     if (children.length) {
       item.children = children
       children.forEach(c => idsToRemove.push(c.id))
-      ret = ret.filter(p => !idsToRemove.includes(p.id))
     }
   })
+
+  ret = ret.filter(p => !idsToRemove.includes(p.id))
 
   return ret
 }
