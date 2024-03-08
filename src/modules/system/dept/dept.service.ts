@@ -17,6 +17,7 @@ export class DeptService {
     const list = await this.deptRepository
       .createQueryBuilder('dept')
       .where('dept.name like :name', { name: `%${name || ''}%` })
+      .orderBy('dept.order_no', 'ASC')
       .getMany()
     return buildTreeFromList(list)
   }

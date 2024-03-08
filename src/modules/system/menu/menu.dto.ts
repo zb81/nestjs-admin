@@ -15,7 +15,7 @@ export class CreateMenuDto {
   @Min(0)
   orderNo: number
 
-  @ValidateIf(o => o.type === 1)
+  @ValidateIf(o => o.type !== 2)
   path: string
 
   @ValidateIf(o => o.type === 1)

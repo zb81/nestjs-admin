@@ -8,7 +8,7 @@ export class DeptEntity extends BaseEntity {
   @Column()
   name: string
 
-  @Column({ default: 0 })
+  @Column({ name: 'order_no', default: 0 })
   orderNo: number
 
   @Column({ nullable: true })
