@@ -1,9 +1,8 @@
-import { Column, Entity, Tree, TreeChildren, TreeParent } from 'typeorm'
+import { Column, Entity } from 'typeorm'
 
 import { BaseEntity } from '~/common/base.entity'
 
 @Entity({ name: 'sys_menu' })
-@Tree('materialized-path')
 export class MenuEntity extends BaseEntity {
   @Column({ name: 'parent_id', nullable: true })
   parentId: number
@@ -37,10 +36,4 @@ export class MenuEntity extends BaseEntity {
 
   @Column({ nullable: true })
   path: string
-
-  @TreeChildren({ cascade: true })
-  children: MenuEntity[]
-
-  @TreeParent({ onDelete: 'SET NULL' })
-  parent?: MenuEntity
 }

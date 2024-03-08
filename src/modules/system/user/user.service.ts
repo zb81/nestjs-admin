@@ -3,6 +3,7 @@ import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm'
 import { EntityManager, Repository } from 'typeorm'
 
 import { BizException } from '~/common/biz.exception'
+import { CommonStatus } from '~/constants'
 import { BizError } from '~/constants/biz-error'
 import { RegisterDto } from '~/modules/auth/dto/auth.dto'
 import { UserEntity } from '~/modules/system/user/user.entity'
@@ -30,6 +31,13 @@ export class UserService {
         status: 1,
       })
       await manager.save(newUser)
+    })
+  }
+
+  async findByUsername(username: string) {
+    return await this.userRepository.findOneBy({
+      username,
+      status: CommonStatus.ENABLE,
     })
   }
 }

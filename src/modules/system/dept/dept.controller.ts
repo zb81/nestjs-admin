@@ -1,15 +1,15 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 
-import { CreateDeptDto } from './dept.dto'
-import { DeptService } from './dept.service'
+import { CreateDeptDto, QueryDeptDto } from '~/modules/system/dept/dept.dto'
+import { DeptService } from '~/modules/system/dept/dept.service'
 
 @Controller('dept')
 export class DeptController {
   constructor(private readonly deptService: DeptService) {}
 
   @Get('tree')
-  async tree() {
-    return await this.deptService.tree()
+  async tree(@Query() dto: QueryDeptDto) {
+    return await this.deptService.tree(dto.name)
   }
 
   @Post()

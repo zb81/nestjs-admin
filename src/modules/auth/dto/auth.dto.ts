@@ -5,8 +5,26 @@ export class SendEmailCodeDto {
   email: string
 }
 
+export class LoginDto {
+  @IsString()
+  @MinLength(4, { message: '用户名不能少于 4 位' })
+  username: string
+
+  @IsString()
+  password: string
+
+  @IsString()
+  key: string
+
+  @IsString()
+  @MinLength(4)
+  @MaxLength(4)
+  code: string
+}
+
 export class RegisterDto {
   @IsString()
+  @MinLength(4, { message: '用户名不能少于 4 位' })
   username: string
 
   @IsEmail()

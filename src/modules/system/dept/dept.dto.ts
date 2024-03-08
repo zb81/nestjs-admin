@@ -13,3 +13,9 @@ export class CreateDeptDto {
   @IsOptional()
   parentId: number
 }
+
+export class QueryDeptDto {
+  @IsString()
+  @IsOptional()
+  name: string
+}

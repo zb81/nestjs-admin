@@ -1,48 +1,27 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { TreeRepository } from 'typeorm'
+import { Repository } from 'typeorm'
 
-import { shakeTree } from '~/utils/tree'
-
-import { CreateDeptDto } from './dept.dto'
-import { DeptEntity } from './dept.entity'
+import { CreateDeptDto } from '~/modules/system/dept/dept.dto'
+import { DeptEntity } from '~/modules/system/dept/dept.entity'
+import { buildTreeFromList } from '~/utils/tree'
 
 @Injectable()
 export class DeptService {
   constructor(
     @InjectRepository(DeptEntity)
-    private readonly deptRepository: TreeRepository<DeptEntity>,
+    private readonly deptRepository: Repository<DeptEntity>,
   ) {}
 
   async tree(name?: string) {
-    if (name) {
-      const tree: DeptEntity[] = []
-      const list = await this.deptRepository.createQueryBuilder('dept')
-        .where('dept.name like :name', { name: `%${name}%` })
-        .getMany()
-
-      for (const d of list)
-        tree.push(await this.deptRepository.findDescendantsTree(d))
-
-      shakeTree(tree)
-      return tree
-    }
-
-    const deptTree = await this.deptRepository.findTrees({
-      depth: 2,
-      relations: ['parent'],
-    })
-
-    shakeTree(deptTree)
-
-    return deptTree
+    const list = await this.deptRepository
+      .createQueryBuilder('dept')
+      .where('dept.name like :name', { name: `%${name || ''}%` })
+      .getMany()
+    return buildTreeFromList(list)
   }
 
   async create(dto: CreateDeptDto) {
-    const parent = await this.deptRepository.findOneBy({ id: dto.parentId })
-    await this.deptRepository.save({
-      ...dto,
-      parent,
-    })
+    await this.deptRepository.save(dto)
   }
 }
