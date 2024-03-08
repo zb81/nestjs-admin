@@ -1,8 +1,10 @@
-import { HttpException, Injectable, Logger } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { MailerService as NestMailerService } from '@nestjs-modules/mailer'
 
+import { BizException } from '~/common/biz.exception'
 import { ConfigInPath } from '~/config'
+import { BizError } from '~/constants/biz-error'
 import { genEmailCodeKey, genEmailIpCountKey, genEmailIpForbiddenKey, genEmailToCountKey, genEmailToForbiddenKey } from '~/constants/redis-key'
 import { RedisService } from '~/modules/shared/redis/redis.service'
 import { randomValue } from '~/utils'
@@ -38,10 +40,10 @@ export class MailerService {
     // 同一 IP / 邮箱，60 秒内只能发送一次
     const ipForbidden = await this.redis.get(genEmailIpForbiddenKey(ip))
     if (ipForbidden)
-      throw new HttpException('请一分钟后再试', 429)
+      throw new BizException(BizError.EMAIL_FORBIDDEN)
     const toForbidden = await this.redis.get(genEmailToForbiddenKey(to))
     if (toForbidden)
-      throw new HttpException('请一分钟后再试', 429)
+      throw new BizException(BizError.EMAIL_FORBIDDEN)
 
     // 同一 IP / 邮箱，每天最多发送 5 次
     const LIMIT = 5
@@ -50,11 +52,11 @@ export class MailerService {
     let ipCount: number | string = await this.redis.get(ipCountKey)
     ipCount = ipCount ? Number(ipCount) : 0
     if (ipCount >= LIMIT)
-      throw new HttpException('一天最多发送5条验证码', 429)
+      throw new BizException(BizError.EMAIL_LIMIT)
     let toCount: number | string = await this.redis.get(toCountKey)
     toCount = toCount ? Number(toCount) : 0
     if (toCount >= LIMIT)
-      throw new HttpException('一天最多发送5条验证码', 429)
+      throw new BizException(BizError.EMAIL_LIMIT)
   }
 
   async send(to: string, subject: string, content: string, type: 'text' | 'html' = 'text'): Promise<any> {
@@ -78,7 +80,7 @@ export class MailerService {
     const key = genEmailCodeKey(to)
     const res = await this.redis.get(key)
     if (res !== code)
-      throw new HttpException('验证码不正确', 400)
+      throw new BizException(BizError.WRONG_CODE)
 
     await this.redis.del(key)
   }

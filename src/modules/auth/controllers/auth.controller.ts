@@ -4,16 +4,18 @@ import { Body, Controller, Get, Ip, Post } from '@nestjs/common'
 import { create } from 'svg-captcha'
 
 import { genCaptchaImgKey } from '~/constants/redis-key'
-import { SendEmailCodeDto } from '~/modules/auth/dto/auth.dto'
+import { RegisterDto, SendEmailCodeDto } from '~/modules/auth/dto/auth.dto'
 import { MailerService } from '~/modules/shared/mailer/mailer.service'
 import { RedisService } from '~/modules/shared/redis/redis.service'
+import { UserService } from '~/modules/system/user/user.service'
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly mailer: MailerService,
     private readonly redis: RedisService,
-  ) {}
+    private readonly userService: UserService,
+  ) { }
 
   @Post('email/code')
   async sendEmailCode(@Body() dto: SendEmailCodeDto, @Ip() ip: string) {
@@ -41,5 +43,12 @@ export class AuthController {
 
     await this.redis.set(genCaptchaImgKey(res.id), svg.text, 60 * 5)
     return res
+  }
+
+  @Post('register')
+  async register(@Body() dto: RegisterDto) {
+    const { email, code } = dto
+    await this.mailer.checkCode(email, code)
+    await this.userService.register(dto)
   }
 }

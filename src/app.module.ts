@@ -9,6 +9,7 @@ import { LogInterceptor } from '~/interceptors/log.interceptor'
 import { TransformInterceptor } from '~/interceptors/transform.interceptor'
 import { AuthModule } from '~/modules/auth/auth.module'
 import { SharedModule } from '~/modules/shared/shared.module'
+import { SystemModule } from '~/modules/system/system.module'
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SharedModule } from '~/modules/shared/shared.module'
     SharedModule,
 
     AuthModule,
+    SystemModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: ExceptionsFilter },
