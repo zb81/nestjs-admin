@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Ip, Post } from '@nestjs/common'
 
+import { Public } from '~/decorators/public.decorator'
+
 import { AuthService } from '~/modules/auth/auth.service'
 import { LoginDto, RegisterDto, SendEmailCodeDto } from '~/modules/auth/dto/auth.dto'
 import { CaptchaService } from '~/modules/auth/services/captcha.service'
@@ -7,6 +9,7 @@ import { MailerService } from '~/modules/shared/mailer/mailer.service'
 import { UserService } from '~/modules/system/user/user.service'
 
 @Controller('auth')
+@Public()
 export class AuthController {
   constructor(
     private readonly mailer: MailerService,
@@ -32,7 +35,7 @@ export class AuthController {
   async login(@Body() dto: LoginDto) {
     const { key, code, username, password } = dto
     await this.captchaService.checkCaptchaImg(key, code)
-    await this.authService.login(username, password)
+    return await this.authService.login(username, password)
   }
 
   @Post('register')

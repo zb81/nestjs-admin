@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt'
 import { ConfigInPath } from '~/config'
 import { AuthController } from '~/modules/auth/auth.controller'
 import { AuthService } from '~/modules/auth/auth.service'
+import { JwtStrategy } from '~/modules/auth/jwt.strategy'
 import { CaptchaService } from '~/modules/auth/services/captcha.service'
 import { TokenService } from '~/modules/auth/services/token.service'
 import { UserModule } from '~/modules/system/user/user.module'
@@ -29,6 +30,6 @@ import { isDev } from '~/utils'
     }),
   ],
   controllers: [AuthController],
-  providers: [CaptchaService, AuthService, TokenService],
+  providers: [CaptchaService, AuthService, TokenService, JwtStrategy],
 })
 export class AuthModule { }

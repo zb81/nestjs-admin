@@ -19,5 +19,7 @@ export class AuthService {
       throw new BizException(BizError.USER_PASSWORD_ERROR)
 
     // TODO: 查询角色
+
+    return this.tokenService.genAccessToken(user.id)
   }
 }

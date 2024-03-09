@@ -7,7 +7,12 @@ export class TokenService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async genAccessToken(uid: number) {
-    // this.jwtService.sign()
+  genAccessToken(uid: number) {
+    const payload: JwtPayload = {
+      uid,
+      roles: [],
+      pv: 1,
+    }
+    return this.jwtService.sign(payload)
   }
 }
