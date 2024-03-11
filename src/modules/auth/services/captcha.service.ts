@@ -37,8 +37,8 @@ export class CaptchaService {
   async checkCaptchaImg(id: string, code: string) {
     const key = genCaptchaImgKey(id)
     const res = await this.redis.get(key)
+    await this.redis.del(key)
     if (res !== code)
       throw new BizException(BizError.WRONG_CODE)
-    await this.redis.del(key)
   }
 }
