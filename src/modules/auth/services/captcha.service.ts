@@ -29,8 +29,8 @@ export class CaptchaService {
       id: randomUUID(),
     }
 
-    // 图形验证码 5 分钟有效
-    await this.redis.set(genCaptchaImgKey(res.id), svg.text, 60 * 5)
+    // 图形验证码 1 分钟有效
+    await this.redis.set(genCaptchaImgKey(res.id), svg.text, 60 * 1)
     return res
   }
 

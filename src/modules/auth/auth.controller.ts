@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Ip, Post } from '@nestjs/common'
 
 import { Public } from '~/decorators/public.decorator'
-
 import { AuthService } from '~/modules/auth/auth.service'
-import { LoginDto, RegisterDto, SendEmailCodeDto } from '~/modules/auth/dto/auth.dto'
+import { LoginDto, RefreshDto, RegisterDto, SendEmailCodeDto } from '~/modules/auth/dto/auth.dto'
 import { CaptchaService } from '~/modules/auth/services/captcha.service'
+import { TokenService } from '~/modules/auth/services/token.service'
 import { MailerService } from '~/modules/shared/mailer/mailer.service'
 import { UserService } from '~/modules/system/user/user.service'
 
@@ -16,6 +16,7 @@ export class AuthController {
     private readonly userService: UserService,
     private readonly captchaService: CaptchaService,
     private readonly authService: AuthService,
+    private readonly tokenService: TokenService,
   ) { }
 
   @Post('email/code')
@@ -43,5 +44,10 @@ export class AuthController {
     const { email, code } = dto
     await this.mailer.checkCode(email, code)
     await this.userService.register(dto)
+  }
+
+  @Post('refresh')
+  async refresh(@Body() { refreshToken }: RefreshDto) {
+    return await this.tokenService.refreshToken(refreshToken)
   }
 }

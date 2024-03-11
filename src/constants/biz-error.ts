@@ -5,4 +5,5 @@ export enum BizError {
 
   USER_EXISTS = '20001:用户已存在',
   USER_PASSWORD_ERROR = '20002:用户名或密码错误',
+  INVALID_REFRESH_TOKEN = '20003:无效的刷新令牌',
 }

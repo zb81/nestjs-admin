@@ -42,3 +42,8 @@ export class RegisterDto {
   })
   password: string
 }
+
+export class RefreshDto {
+  @IsString()
+  refreshToken: string
+}

@@ -7,3 +7,5 @@ export const genEmailIpCountKey = (ip: string) => `email:ip:count:${ip}`
 export const genEmailToCountKey = (to: string) => `email:to:count:${to}`
 
 export const genAuthPermKey = (uid: number | string) => `auth:perm:${uid}`
+
+export const genRefreshTokenIdKey = (uid: number | string, id: string) => `refresh:${uid}:${id}`
