@@ -7,7 +7,7 @@ export class BaseRes<T = any> {
 
   constructor(code: number, data: T, message = RESPONSE_SUCCESS_MSG) {
     this.code = code
-    data && (this.data = data)
+    this.data = data
     this.message = message
   }
 

@@ -22,4 +22,11 @@ export class AuthService {
 
     return this.tokenService.genAccessToken(user.id)
   }
+
+  async checkUsername(username: string) {
+    const user = await this.userService.findByUsername(username)
+    if (user)
+      return false
+    return true
+  }
 }

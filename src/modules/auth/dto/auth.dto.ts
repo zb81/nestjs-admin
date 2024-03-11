@@ -7,7 +7,6 @@ export class SendEmailCodeDto {
 
 export class LoginDto {
   @IsString()
-  @MinLength(4, { message: '用户名不能少于 4 位' })
   username: string
 
   @IsString()
@@ -24,7 +23,7 @@ export class LoginDto {
 
 export class RegisterDto {
   @IsString()
-  @MinLength(4, { message: '用户名不能少于 4 位' })
+  @Matches(/^[a-zA-Z0-9_]{4,12}$/, { message: '用户名必须是 4-12 位字母、数字或下划线' })
   username: string
 
   @IsEmail()
@@ -46,4 +45,10 @@ export class RegisterDto {
 export class RefreshDto {
   @IsString()
   refreshToken: string
+}
+
+export class CheckUsernameDto {
+  @IsString()
+  @Matches(/^[a-zA-Z0-9_]{4,12}$/, { message: '用户名必须是 4-12 位字母、数字或下划线' })
+  username: string
 }

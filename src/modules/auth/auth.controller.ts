@@ -1,8 +1,8 @@
-import { Body, Controller, Get, Ip, Post } from '@nestjs/common'
+import { Body, Controller, Get, Ip, Post, Query } from '@nestjs/common'
 
 import { Public } from '~/decorators/public.decorator'
 import { AuthService } from '~/modules/auth/auth.service'
-import { LoginDto, RefreshDto, RegisterDto, SendEmailCodeDto } from '~/modules/auth/dto/auth.dto'
+import { CheckUsernameDto, LoginDto, RefreshDto, RegisterDto, SendEmailCodeDto } from '~/modules/auth/dto/auth.dto'
 import { CaptchaService } from '~/modules/auth/services/captcha.service'
 import { TokenService } from '~/modules/auth/services/token.service'
 import { MailerService } from '~/modules/shared/mailer/mailer.service'
@@ -49,5 +49,10 @@ export class AuthController {
   @Post('refresh')
   async refresh(@Body() { refreshToken }: RefreshDto) {
     return await this.tokenService.refreshToken(refreshToken)
+  }
+
+  @Get('checkusername')
+  async checkUsername(@Query() { username }: CheckUsernameDto) {
+    return await this.authService.checkUsername(username)
   }
 }
