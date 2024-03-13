@@ -7,6 +7,7 @@ import { NestJSAdminConfigs } from '~/config'
 import { ExceptionsFilter } from '~/filters/exception.filter'
 import { LogInterceptor } from '~/interceptors/log.interceptor'
 import { TransformInterceptor } from '~/interceptors/transform.interceptor'
+import { AccountModule } from '~/modules/account/account.module'
 import { AuthModule } from '~/modules/auth/auth.module'
 import { JwtAuthGuard } from '~/modules/auth/guards/jwt-auth.guard'
 import { SharedModule } from '~/modules/shared/shared.module'
@@ -26,6 +27,7 @@ import { SystemModule } from '~/modules/system/system.module'
 
     AuthModule,
     SystemModule,
+    AccountModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: ExceptionsFilter },

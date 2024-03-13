@@ -1,8 +1,9 @@
 import { Exclude } from 'class-transformer'
-import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm'
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, Relation } from 'typeorm'
 
 import { BaseEntity } from '~/common/base.entity'
 import { DeptEntity } from '~/modules/system/dept/dept.entity'
+import { RoleEntity } from '~/modules/system/role/role.entity'
 
 @Entity({ name: 'sys_user' })
 export class UserEntity extends BaseEntity {
@@ -34,4 +35,12 @@ export class UserEntity extends BaseEntity {
   @ManyToOne(() => DeptEntity, dept => dept.users)
   @JoinColumn({ name: 'dept_id' })
   dept: Relation<DeptEntity>
+
+  @ManyToMany(() => RoleEntity, role => role.users)
+  @JoinTable({
+    name: 'sys_user_role',
+    joinColumn: { name: 'user_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
+  })
+  roles: Relation<RoleEntity[]>
 }

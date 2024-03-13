@@ -5,7 +5,7 @@ import { EntityManager, Repository } from 'typeorm'
 import { BizException } from '~/common/biz.exception'
 import { CommonStatus } from '~/constants'
 import { BizError } from '~/constants/biz-error'
-import { RegisterDto } from '~/modules/auth/dto/auth.dto'
+import { RegisterDto } from '~/modules/auth/auth.dto'
 import { UserEntity } from '~/modules/system/user/user.entity'
 import { encryptPassword } from '~/utils/crypt'
 

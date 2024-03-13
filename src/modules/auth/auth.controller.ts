@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Ip, Patch, Post, Query } from '@nestjs/common'
 
 import { Public } from '~/decorators/public.decorator'
+import { CheckUsernameDto, ForgetEmailCodeDto, LoginDto, RefreshDto, RegisterDto, RegisterEmailCodeDto, ResetPasswordDto } from '~/modules/auth/auth.dto'
 import { AuthService } from '~/modules/auth/auth.service'
-import { CheckUsernameDto, ForgetEmailCodeDto, LoginDto, RefreshDto, RegisterDto, RegisterEmailCodeDto, ResetPasswordDto } from '~/modules/auth/dto/auth.dto'
 import { CaptchaService } from '~/modules/auth/services/captcha.service'
 import { TokenService } from '~/modules/auth/services/token.service'
 import { MailerService } from '~/modules/shared/mailer/mailer.service'
