@@ -29,4 +29,10 @@ export class AuthService {
       return false
     return true
   }
+
+  async checkUsernameAndEmail(username: string, email: string) {
+    const user = await this.userService.findByUsernameAndEmail(username, email)
+    if (!user)
+      throw new BizException(BizError.USER_NOT_EXIST)
+  }
 }

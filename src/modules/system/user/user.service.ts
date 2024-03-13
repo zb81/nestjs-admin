@@ -40,4 +40,18 @@ export class UserService {
       status: CommonStatus.ENABLE,
     })
   }
+
+  async findByUsernameAndEmail(username: string, email: string) {
+    return await this.userRepository.findOneBy({
+      username,
+      email,
+      status: CommonStatus.ENABLE,
+    })
+  }
+
+  async resetPassword(username: string, password: string) {
+    const user = await this.userRepository.findOneBy({ username })
+    user.password = await encryptPassword(password)
+    await this.userRepository.save(user)
+  }
 }
