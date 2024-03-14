@@ -9,6 +9,7 @@ import { ConfigInPath } from '~/config'
 import { BizError } from '~/constants/biz-error'
 import { genRefreshTokenIdKey } from '~/constants/redis-key'
 import { RedisService } from '~/modules/shared/redis/redis.service'
+import { RoleService } from '~/modules/system/role/role.service'
 
 @Injectable()
 export class TokenService {
@@ -16,13 +17,14 @@ export class TokenService {
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService<ConfigInPath<'jwt'>>,
     private readonly redis: RedisService,
+    private readonly roleService: RoleService,
   ) {}
 
-  genAccessToken(uid: number) {
+  genAccessToken(uid: number, roles: JwtRoleItem[]) {
     const refreshToken = this.genRefreshToken(uid)
     const payload: JwtPayload = {
       uid,
-      roles: [],
+      roles,
       pv: 1,
     }
     const accessToken = this.jwtService.sign(payload, {
@@ -70,6 +72,7 @@ export class TokenService {
   async refreshToken(refreshToken: string) {
     const { uid, refreshId } = await this.checkRefreshToken(refreshToken)
     await this.redis.del(genRefreshTokenIdKey(uid, refreshId))
-    return this.genAccessToken(uid)
+    const roles = await this.roleService.getRolesByUserId(uid)
+    return this.genAccessToken(uid, roles)
   }
 }

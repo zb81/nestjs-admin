@@ -1,6 +1,11 @@
+interface JwtRoleItem {
+  roleId: number
+  roleValue: string
+}
+
 interface JwtPayload {
   uid: number
-  roles: string[]
+  roles: JwtRoleItem[]
   pv: number
   iat?: number
   exp?: number
