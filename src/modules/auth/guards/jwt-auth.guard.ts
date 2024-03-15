@@ -55,6 +55,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
 
     // 判断是否二次登录
     const redisToken = await this.redis.get(genAuthAccessTokenKey(request.user.uid))
+    if (!redisToken)
+      throw new BizException(BizError.INVALID_LOGIN)
     if (token !== redisToken)
       throw new BizException(BizError.LOGIN_ELSEWHERE)
 
