@@ -10,3 +10,4 @@ export const genAuthAccessTokenKey = (val: string | number) => `auth:accessToken
 export const genAuthRefreshTokenKey = (val: string | number) => `auth:refreshToken:${String(val)}` as const
 export const genAuthPermKey = (val: number | string) => `auth:perm:${String(val)}` as const
 export const genAuthPVKey = (val: string | number) => `auth:pv:${String(val)}` as const
+export const genAuthInvalidTokenKey = (val: string) => `auth:invalidToken:${val}` as const

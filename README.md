@@ -21,5 +21,5 @@
 ## 鉴权
 
 - [x] 注册
-- [ ] 登录
-- [ ] 权限守卫 (JWT + permission)
+- [x] 登录 (JWT / accessToken + refreshToken)
+- [ ] 权限守卫 (permission)

@@ -2,8 +2,11 @@ import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 
+import { BizException } from '~/common/biz.exception'
+
 import { ConfigInPath } from '~/config'
-import { genAuthAccessTokenKey, genAuthRefreshTokenKey } from '~/constants/redis-key'
+import { BizError } from '~/constants/biz-error'
+import { genAuthAccessTokenKey, genAuthInvalidTokenKey, genAuthRefreshTokenKey } from '~/constants/redis-key'
 import { RedisService } from '~/modules/shared/redis/redis.service'
 import { RoleService } from '~/modules/system/role/role.service'
 
@@ -47,8 +50,17 @@ export class TokenService {
 
   async resignToken(refreshToken: string) {
     const { uid }: JwtRefreshPayload = await this.jwtService.verifyAsync(refreshToken, this.refreshTokenOptions)
-    await this.redis.del(genAuthRefreshTokenKey(uid))
-    await this.redis.del(genAuthAccessTokenKey(uid))
+
+    const redisRefreshToken = await this.redis.get(genAuthRefreshTokenKey(uid))
+    const invalid = await this.redis.get(genAuthInvalidTokenKey(refreshToken))
+    if (!redisRefreshToken || invalid)
+      throw new BizException(BizError.INVALID_LOGIN)
+
+    this.redis.del(genAuthRefreshTokenKey(uid))
+    this.redis.del(genAuthAccessTokenKey(uid))
+
+    await this.redis.set(genAuthInvalidTokenKey(refreshToken), refreshToken, this.refreshTokenOptions.expiresIn)
+
     return await this.genAccessToken(uid)
   }
 }
