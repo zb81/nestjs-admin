@@ -2,7 +2,6 @@ import { Controller, Get } from '@nestjs/common'
 
 import { User } from '~/decorators/user.decorator'
 import { MenuService } from '~/modules/system/menu/menu.service'
-
 import { UserService } from '~/modules/system/user/user.service'
 
 @Controller('account')
@@ -19,7 +18,11 @@ export class AccountController {
 
   @Get('menus')
   async menus(@User('roleIds') roleIds: number[]) {
-    return roleIds
-    // return await this.menuService
+    return await this.menuService.getMenusByRoleIds(roleIds)
+  }
+
+  @Get('permissions')
+  async permissions(@User('roleIds') roleIds: number[]) {
+    return await this.menuService.getPermissionsByRoleIds(roleIds)
   }
 }

@@ -1,5 +1,4 @@
-import { isIP, isIPv4, isIPv6 } from 'node:net'
-import * as os from 'node:os'
+import { isIP } from 'node:net'
 
 /* 判断内网 ip */
 export function isLAN(ip: string) {
@@ -25,23 +24,9 @@ export function isLAN(ip: string) {
   )
 }
 
-/** 判断本机 ip */
-export function isLocal(ip: string) {
-  if (isIPv4(ip))
-    return ip === '127.0.0.1' || ip === os.networkInterfaces().lo0[0].address
-
-  if (isIPv6(ip))
-    return ip === '::1' || ip === os.networkInterfaces().lo0[1].address
-
-  return false
-}
-
 export async function getIpAddress(ip: string) {
   if (!isIP(ip))
     return '未知地址'
-
-  if (isLocal(ip))
-    return '本机地址'
 
   if (isLAN(ip))
     return '内网地址'

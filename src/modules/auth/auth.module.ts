@@ -3,6 +3,7 @@ import { JwtModule } from '@nestjs/jwt'
 
 import { AuthController } from '~/modules/auth/auth.controller'
 import { AuthService } from '~/modules/auth/auth.service'
+import { AccountController } from '~/modules/auth/controllers/account.controller'
 import { CaptchaController } from '~/modules/auth/controllers/captcha.controller'
 import { EmailController } from '~/modules/auth/controllers/email.controller'
 import { CaptchaService } from '~/modules/auth/services/captcha.service'
@@ -21,7 +22,7 @@ import { UserModule } from '~/modules/system/user/user.module'
     LogModule,
     JwtModule.register({}),
   ],
-  controllers: [AuthController, EmailController, CaptchaController],
+  controllers: [AuthController, EmailController, CaptchaController, AccountController],
   providers: [CaptchaService, AuthService, TokenService, JwtStrategy],
   exports: [AuthService],
 })

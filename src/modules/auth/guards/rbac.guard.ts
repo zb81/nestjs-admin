@@ -3,11 +3,9 @@ import { Reflector } from '@nestjs/core'
 import { Request } from 'express'
 
 import { BizException } from '~/common/biz.exception'
-import { ROLE_ADMIN } from '~/constants'
+import { ROOT_ROLE_VALUE } from '~/constants'
 import { BizError } from '~/constants/biz-error'
-import { ALLOW_NON_PERMISSION_KEY } from '~/decorators/allow-non-permission.decorator'
 import { PERMISSION_KEY } from '~/decorators/permission.decorator'
-
 import { PUBLIC_KEY } from '~/decorators/public.decorator'
 import { AuthService } from '~/modules/auth/auth.service'
 
@@ -32,14 +30,6 @@ export class RbacGuard implements CanActivate {
     if (!user)
       throw new BizException(BizError.INVALID_LOGIN)
 
-    // 无需权限
-    const allowNonPermission = this.reflector.getAllAndOverride<boolean>(
-      ALLOW_NON_PERMISSION_KEY,
-      [context.getHandler(), context.getClass()],
-    )
-    if (allowNonPermission)
-      return true
-
     // 获取权限
     const permissions = this.reflector.getAllAndOverride<string | string[]>(
       PERMISSION_KEY,
@@ -51,7 +41,7 @@ export class RbacGuard implements CanActivate {
       return true
 
     // 管理员，通过
-    if (user.roleValues.includes(ROLE_ADMIN))
+    if (user.roleValues.includes(ROOT_ROLE_VALUE))
       return true
 
     // 获取 Redis 中的权限

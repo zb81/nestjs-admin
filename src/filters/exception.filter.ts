@@ -7,6 +7,7 @@ import { BaseRes } from '~/common/response.model'
 @Catch()
 export class ExceptionsFilter implements NestExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
+    console.log(exception)
     const res = host.switchToHttp().getResponse<Response>()
 
     // 如果是业务异常，直接返回业务异常信息

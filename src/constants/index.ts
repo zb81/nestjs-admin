@@ -5,5 +5,4 @@ export enum CommonStatus {
 
 export const ROOT_USER_ID = 1
 export const ROOT_ROLE_ID = 1
-
-export const ROLE_ADMIN = 'admin'
+export const ROOT_ROLE_VALUE = 'admin'
