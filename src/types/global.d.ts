@@ -12,8 +12,7 @@ interface JwtPayload {
 }
 
 interface JwtRefreshPayload {
-  uid: number
-  refreshId: string
+  uuid: string
   iat?: number
   exp?: number
 }

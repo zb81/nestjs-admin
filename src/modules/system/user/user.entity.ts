@@ -1,12 +1,13 @@
 import { Exclude } from 'class-transformer'
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, Relation } from 'typeorm'
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, Relation } from 'typeorm'
 
-import { BaseEntity } from '~/common/base.entity'
+import { CommonEntity } from '~/common/base.entity'
+import { AccessTokenEntity } from '~/modules/auth/entities/access-token.entity'
 import { DeptEntity } from '~/modules/system/dept/dept.entity'
 import { RoleEntity } from '~/modules/system/role/role.entity'
 
 @Entity({ name: 'sys_user' })
-export class UserEntity extends BaseEntity {
+export class UserEntity extends CommonEntity {
   @Column({ unique: true })
   username: string
 
@@ -43,4 +44,7 @@ export class UserEntity extends BaseEntity {
     inverseJoinColumn: { name: 'role_id', referencedColumnName: 'id' },
   })
   roles: Relation<RoleEntity[]>
+
+  @OneToMany(() => AccessTokenEntity, accessToken => accessToken.user, { cascade: true })
+  accessTokens: AccessTokenEntity[]
 }

@@ -1,10 +1,10 @@
 import { Column, Entity, ManyToMany, Relation } from 'typeorm'
 
-import { BaseEntity } from '~/common/base.entity'
+import { CommonEntity } from '~/common/base.entity'
 import { RoleEntity } from '~/modules/system/role/role.entity'
 
 @Entity({ name: 'sys_menu' })
-export class MenuEntity extends BaseEntity {
+export class MenuEntity extends CommonEntity {
   @Column({ name: 'parent_id', nullable: true })
   parentId: number
 

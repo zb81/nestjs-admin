@@ -3,8 +3,7 @@ import { ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { LoggerOptions } from 'typeorm'
 
-import { IDatabaseConfig } from '~/config/database.config'
-import { envString } from '~/config/util'
+import { IDatabaseConfig, envString } from '~/config'
 
 import { TypeOrmLogger } from './typeorm-logger'
 

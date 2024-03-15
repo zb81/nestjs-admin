@@ -2,7 +2,7 @@ import { Global, Inject, Module, OnApplicationShutdown } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import Redis from 'ioredis'
 
-import { IRedisConfig } from '~/config/redis.config'
+import { IRedisConfig } from '~/config'
 import { REDIS_CLIENT_TOKEN } from '~/constants/provider-token'
 
 import { RedisService } from './redis.service'

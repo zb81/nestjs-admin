@@ -1,11 +1,11 @@
 import { Column, Entity, JoinTable, ManyToMany, Relation } from 'typeorm'
 
-import { BaseEntity } from '~/common/base.entity'
+import { CommonEntity } from '~/common/base.entity'
 import { MenuEntity } from '~/modules/system/menu/menu.entity'
 import { UserEntity } from '~/modules/system/user/user.entity'
 
 @Entity({ name: 'sys_role' })
-export class RoleEntity extends BaseEntity {
+export class RoleEntity extends CommonEntity {
   @Column({ length: 50, unique: true, comment: '角色名' })
   name: string
 

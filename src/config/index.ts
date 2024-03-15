@@ -19,6 +19,15 @@ import type { IRedisConfig } from './redis.config'
 import { SwaggerConfig } from './swagger.config'
 import type { ISwaggerConfig } from './swagger.config'
 
+export * from './app.config'
+export * from './database.config'
+export * from './jwt.config'
+export * from './logger.config'
+export * from './mailer.config'
+export * from './redis.config'
+export * from './swagger.config'
+export * from './util'
+
 interface Namespaces {
   app: IAppConfig
   database: IDatabaseConfig

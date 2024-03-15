@@ -1,11 +1,11 @@
-export const genCaptchaImgKey = (id: string) => `captcha:img:${id}`
+export const genCaptchaImgKey = (id: string) => `captcha:img:${id}` as const
 
-export const genEmailCodeKey = (to: string) => `email:code:${to}`
-export const genEmailIpForbiddenKey = (ip: string) => `email:ip:forbidden:${ip}`
-export const genEmailToForbiddenKey = (to: string) => `email:to:forbidden:${to}`
-export const genEmailIpCountKey = (ip: string) => `email:ip:count:${ip}`
-export const genEmailToCountKey = (to: string) => `email:to:count:${to}`
+export const genEmailCodeKey = (to: string) => `email:code:${to}` as const
+export const genEmailIpForbiddenKey = (ip: string) => `email:ip:forbidden:${ip}` as const
+export const genEmailToForbiddenKey = (to: string) => `email:to:forbidden:${to}` as const
+export const genEmailIpCountKey = (ip: string) => `email:ip:count:${ip}` as const
+export const genEmailToCountKey = (to: string) => `email:to:count:${to}` as const
 
-export const genAuthPermKey = (uid: number | string) => `auth:perm:${uid}`
-
-export const genRefreshTokenIdKey = (uid: number | string, id: string) => `refresh:${uid}:${id}`
+export const genAuthTokenKey = (val: string | number) => `auth:token:${String(val)}` as const
+export const genAuthPermKey = (val: number | string) => `auth:perm:${String(val)}` as const
+export const genAuthPVKey = (val: string | number) => `auth:pv:${String(val)}` as const
