@@ -22,4 +22,4 @@
 
 - [x] 注册
 - [x] 登录 (JWT / accessToken + refreshToken)
-- [ ] 权限守卫 (permission)
+- [x] 权限守卫 (RBAC)

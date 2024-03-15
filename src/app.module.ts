@@ -10,6 +10,7 @@ import { TransformInterceptor } from '~/interceptors/transform.interceptor'
 import { AccountModule } from '~/modules/account/account.module'
 import { AuthModule } from '~/modules/auth/auth.module'
 import { JwtAuthGuard } from '~/modules/auth/guards/jwt-auth.guard'
+import { RbacGuard } from '~/modules/auth/guards/rbac.guard'
 import { SharedModule } from '~/modules/shared/shared.module'
 import { SystemModule } from '~/modules/system/system.module'
 
@@ -35,6 +36,7 @@ import { SystemModule } from '~/modules/system/system.module'
     { provide: APP_INTERCEPTOR, useClass: LogInterceptor },
 
     { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RbacGuard },
   ],
 })
 export class AppModule {}

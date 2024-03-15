@@ -9,4 +9,5 @@ export enum BizError {
   INVALID_LOGIN = '20004:登录已过期，请重新登录',
   LOGIN_ELSEWHERE = '20005:账号在别处登录',
   USER_NOT_EXIST = '20006:未查询到用户',
+  NOT_ALLOWED = '20007:没有权限',
 }

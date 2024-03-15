@@ -48,7 +48,7 @@ export class AuthService {
     await this.redis.set(genAuthPermKey(uid), JSON.stringify(permissions))
   }
 
-  async getPermissionCache(uid: number) {
+  async getPermissionCache(uid: number): Promise<string[]> {
     const permissions = await this.redis.get(genAuthPermKey(uid))
     return permissions ? JSON.parse(permissions) : []
   }

@@ -34,7 +34,12 @@ export class TokenService {
   }
 
   async genAccessToken(uid: number) {
-    const payload: JwtPayload = { uid, pv: 1 }
+    const roleItems = await this.roleService.getRolesByUserId(uid)
+    const payload: JwtPayload = {
+      uid,
+      roles: roleItems.map(r => r.roleValue),
+      pv: 1,
+    }
     const accessToken = await this.jwtService.signAsync(payload, this.accessTokenOptions)
     await this.redis.set(genAuthAccessTokenKey(uid), accessToken, this.accessTokenOptions.expiresIn)
     const refreshToken = await this.genRefreshToken(uid)

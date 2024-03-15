@@ -23,5 +23,6 @@ import { UserModule } from '~/modules/system/user/user.module'
   ],
   controllers: [AuthController, EmailController, CaptchaController],
   providers: [CaptchaService, AuthService, TokenService, JwtStrategy],
+  exports: [AuthService],
 })
 export class AuthModule { }
