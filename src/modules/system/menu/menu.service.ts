@@ -35,7 +35,7 @@ export class MenuService {
     if (!roles || !roles.length)
       return []
 
-    const roleIds = roles.map(r => r.roleId)
+    const roleIds = roles.map(r => r.id)
     if (roleIds.includes(ROOT_ROLE_ID)) {
       const menus = await this.menuRepository.findBy({
         permission: Not(IsNull()),

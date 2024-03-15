@@ -27,7 +27,7 @@ export class RoleService {
   async getRolesByUserId(id: number) {
     const roles = await this.roleRepository.findBy({ users: { id } })
     if (roles && roles.length)
-      return roles.map(r => ({ roleId: r.id, roleValue: r.value }))
+      return roles.map(r => ({ id: r.id, value: r.value }))
     return []
   }
 }

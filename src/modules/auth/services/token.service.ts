@@ -37,7 +37,8 @@ export class TokenService {
     const roleItems = await this.roleService.getRolesByUserId(uid)
     const payload: JwtPayload = {
       uid,
-      roles: roleItems.map(r => r.roleValue),
+      roleValues: roleItems.map(r => r.value),
+      roleIds: roleItems.map(r => r.id),
       pv: 1,
     }
     const accessToken = await this.jwtService.signAsync(payload, this.accessTokenOptions)

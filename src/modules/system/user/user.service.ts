@@ -16,6 +16,15 @@ export class UserService {
     @InjectEntityManager() private readonly entityManager: EntityManager,
   ) { }
 
+  async getUserInfo(id: number) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: { roles: true },
+    })
+    delete user.password
+    return user
+  }
+
   async register(dto: RegisterDto) {
     const { username, password, email } = dto
     const user = await this.userRepository.findOneBy({ username })

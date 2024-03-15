@@ -51,7 +51,7 @@ export class RbacGuard implements CanActivate {
       return true
 
     // 管理员，通过
-    if (user.roles.includes(ROLE_ADMIN))
+    if (user.roleValues.includes(ROLE_ADMIN))
       return true
 
     // 获取 Redis 中的权限
