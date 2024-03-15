@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Headers, Ip, Patch, Post, Query } from '@nestjs/common'
 
 import { Public } from '~/decorators/public.decorator'
-import { CheckUsernameDto, LoginDto, RegisterDto, ResetPasswordDto } from '~/modules/auth/auth.dto'
+import { CheckUsernameDto, LoginDto, RefreshDto, RegisterDto, ResetPasswordDto } from '~/modules/auth/auth.dto'
 import { AuthService } from '~/modules/auth/auth.service'
 import { CaptchaService } from '~/modules/auth/services/captcha.service'
 import { UserService } from '~/modules/system/user/user.service'
@@ -27,10 +27,10 @@ export class AuthController {
     await this.userService.register(dto)
   }
 
-  // @Post('refresh')
-  // async refresh(@Body() { refreshToken }: RefreshDto) {
-  //   return await this.tokenService.refreshToken(refreshToken)
-  // }
+  @Post('refresh')
+  async refresh(@Body() { refreshToken }: RefreshDto) {
+    return await this.authService.resignToken(refreshToken)
+  }
 
   @Get('checkusername')
   async checkUsername(@Query() { username }: CheckUsernameDto) {

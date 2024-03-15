@@ -5,7 +5,7 @@ export class RegisterEmailCodeDto {
   email: string
 }
 
-export class ForgetEmailCodeDto {
+export class ResetPasswordEmailCodeDto {
   @IsEmail({}, { message: '邮箱格式不正确' })
   email: string
 

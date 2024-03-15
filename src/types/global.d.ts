@@ -5,14 +5,13 @@ interface JwtRoleItem {
 
 interface JwtPayload {
   uid: number
-  roles: JwtRoleItem[]
   pv: number
   iat?: number
   exp?: number
 }
 
 interface JwtRefreshPayload {
-  uuid: string
+  uid: number
   iat?: number
   exp?: number
 }

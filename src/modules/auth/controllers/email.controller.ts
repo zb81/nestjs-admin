@@ -1,7 +1,7 @@
 import { Body, Controller, Ip, Post } from '@nestjs/common'
 
 import { Public } from '~/decorators/public.decorator'
-import { ForgetEmailCodeDto, RegisterEmailCodeDto } from '~/modules/auth/auth.dto'
+import { RegisterEmailCodeDto, ResetPasswordEmailCodeDto } from '~/modules/auth/auth.dto'
 import { AuthService } from '~/modules/auth/auth.service'
 import { MailerService } from '~/modules/shared/mailer/mailer.service'
 
@@ -23,7 +23,7 @@ export class EmailController {
 
   @Public()
   @Post('resetpassword')
-  async sendForgetEmailCode(@Body() dto: ForgetEmailCodeDto, @Ip() ip: string) {
+  async sendResetPasswordEmailCode(@Body() dto: ResetPasswordEmailCodeDto, @Ip() ip: string) {
     const { email, username } = dto
     await this.mailer.checkLimit(email, ip)
     await this.authService.checkUsernameAndEmail(username, email)
