@@ -1,4 +1,4 @@
-import { ExecutionContext, Injectable } from '@nestjs/common'
+import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { AuthGuard } from '@nestjs/passport'
 import { Request } from 'express'
@@ -44,7 +44,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
       result = await super.canActivate(context)
     }
     catch (e) {
-      throw new BizException(BizError.INVALID_LOGIN)
+      throw new UnauthorizedException('令牌过期')
     }
 
     // 此时 request 中有了 user
@@ -56,7 +56,8 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     // 判断是否二次登录
     const redisToken = await this.redis.get(genAuthAccessTokenKey(request.user.uid))
     if (!redisToken)
-      throw new BizException(BizError.INVALID_LOGIN)
+      throw new UnauthorizedException('令牌过期')
+
     if (token !== redisToken)
       throw new BizException(BizError.LOGIN_ELSEWHERE)
 
