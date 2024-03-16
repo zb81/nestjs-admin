@@ -49,6 +49,9 @@ export class MenuService {
   }
 
   async getMenusByRoleIds(roleIds: number[]) {
+    if (!roleIds || !roleIds.length)
+      return []
+
     let menus: MenuEntity[]
     if (roleIds.includes(ROOT_ROLE_ID)) {
       menus = await this.menuRepository.find({
@@ -71,6 +74,9 @@ export class MenuService {
   }
 
   async getPermissionsByRoleIds(roleIds: number[]) {
+    if (!roleIds || !roleIds.length)
+      return []
+
     const result = await this.menuRepository.createQueryBuilder('menu')
       .innerJoin('menu.roles', 'role')
       .andWhere('menu.type = :type', { type: 2 })
