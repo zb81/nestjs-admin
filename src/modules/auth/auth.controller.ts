@@ -4,6 +4,7 @@ import { Public } from '~/decorators/public.decorator'
 import { CheckUsernameDto, LoginDto, RefreshDto, RegisterDto, ResetPasswordDto } from '~/modules/auth/auth.dto'
 import { AuthService } from '~/modules/auth/auth.service'
 import { CaptchaService } from '~/modules/auth/services/captcha.service'
+import { MailerService } from '~/modules/shared/mailer/mailer.service'
 import { UserService } from '~/modules/system/user/user.service'
 
 @Controller('auth')
@@ -12,6 +13,7 @@ export class AuthController {
   constructor(
     private readonly userService: UserService,
     private readonly authService: AuthService,
+    private readonly mailService: MailerService,
     private readonly captchaService: CaptchaService,
   ) { }
 
@@ -24,6 +26,7 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() dto: RegisterDto) {
+    await this.mailService.checkCode(dto.email, dto.code)
     await this.userService.register(dto)
   }
 
@@ -40,6 +43,7 @@ export class AuthController {
   @Patch('resetpassword')
   async resetPassword(@Body() dto: ResetPasswordDto) {
     const { username, email, code, password } = dto
+    await this.mailService.checkCode(email, code)
     await this.authService.checkUsernameAndEmail(username, email)
     await this.userService.resetPassword(username, password)
   }

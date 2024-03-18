@@ -14,16 +14,16 @@ export class MenuEntity extends CommonEntity {
   @Column({ nullable: true })
   permission: string
 
-  @Column({ type: 'tinyint', default: 0, comment: '菜单类型 0:目录 1:菜单 2:按钮' })
+  @Column({ type: 'tinyint', comment: '菜单类型 0:目录 1:菜单 2:按钮' })
   type: number
 
-  @Column({ nullable: true, default: '' })
+  @Column({ nullable: true })
   icon: string
 
-  @Column({ name: 'order_no', type: 'int', default: 0 })
+  @Column({ name: 'order_no', type: 'int' })
   orderNo: number
 
-  @Column({ name: 'keep_alive', type: 'tinyint', default: 1, comment: '是否缓存 0:不缓存 1:缓存' })
+  @Column({ name: 'keep_alive', type: 'tinyint', default: 0, comment: '是否缓存 0:不缓存 1:缓存' })
   keepAlive: number
 
   @Column({ type: 'tinyint', default: 1, comment: '是否显示 0:不显示 1:显示' })
