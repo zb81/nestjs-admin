@@ -48,3 +48,5 @@ export class CreateMenuDto {
   @IsOptional()
   component: string
 }
+
+export class UpdateMenuDto extends CreateMenuDto {}

@@ -4,7 +4,7 @@ import { In, IsNull, Not, Repository } from 'typeorm'
 
 import { CommonStatus, ROOT_ROLE_ID } from '~/constants'
 
-import { CreateMenuDto } from '~/modules/system/menu/menu.dto'
+import { CreateMenuDto, UpdateMenuDto } from '~/modules/system/menu/menu.dto'
 import { MenuEntity } from '~/modules/system/menu/menu.entity'
 import { RoleService } from '~/modules/system/role/role.service'
 import { buildTreeFromList } from '~/utils/tree'
@@ -28,6 +28,10 @@ export class MenuService {
 
   async create(menu: CreateMenuDto) {
     await this.menuRepository.save(menu)
+  }
+
+  async update(id: number, menu: UpdateMenuDto) {
+    await this.menuRepository.update(id, menu)
   }
 
   async getPermissionsByUserId(uid: number) {
