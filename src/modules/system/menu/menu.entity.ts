@@ -32,6 +32,9 @@ export class MenuEntity extends CommonEntity {
   @Column({ type: 'tinyint', default: 1, comment: '状态 0:禁用 1:启用' })
   status: number
 
+  @Column({ type: 'tinyint', nullable: true, comment: '是否外链 0:否 1:是' })
+  external: number
+
   @Column({ name: 'component', nullable: true })
   component: string
 

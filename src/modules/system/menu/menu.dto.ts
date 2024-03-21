@@ -1,4 +1,4 @@
-import { IsBoolean, IsIn, IsInt, IsOptional, IsString, Min, MinLength, ValidateIf } from 'class-validator'
+import { IsIn, IsInt, IsOptional, IsString, Min, MinLength, ValidateIf } from 'class-validator'
 
 export class CreateMenuDto {
   @IsIn([0, 1, 2])
@@ -19,8 +19,8 @@ export class CreateMenuDto {
   path: string
 
   @ValidateIf(o => o.type === 1)
-  @IsBoolean()
-  isExt: boolean
+  @IsIn([0, 1])
+  external: number
 
   @ValidateIf(o => o.type !== 2)
   @IsIn([0, 1])

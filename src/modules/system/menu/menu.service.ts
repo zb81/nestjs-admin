@@ -26,12 +26,30 @@ export class MenuService {
     return buildTreeFromList(list)
   }
 
+  async info(id: number) {
+    return await this.menuRepository.findOneBy({ id })
+  }
+
   async create(menu: CreateMenuDto) {
     await this.menuRepository.save(menu)
   }
 
   async update(id: number, menu: UpdateMenuDto) {
     await this.menuRepository.update(id, menu)
+  }
+
+  async deleteByIds(ids: number[]) {
+    await this.menuRepository.delete(ids)
+  }
+
+  async findChildren(id: number) {
+    const children = await this.menuRepository.findBy({ parentId: id })
+    const ret = [...children]
+    for (const child of children) {
+      const r = await this.findChildren(child.id)
+      ret.push(...r)
+    }
+    return ret
   }
 
   async getPermissionsByUserId(uid: number) {

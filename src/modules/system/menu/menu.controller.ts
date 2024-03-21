@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common'
 
 import { IdParam } from '~/decorators/id-param.decorator'
 import { QueryDeptDto } from '~/modules/system/dept/dept.dto'
@@ -14,6 +14,11 @@ export class MenuController {
     return await this.menuService.tree(dto.name)
   }
 
+  @Get(':id')
+  async info(@IdParam() id: number) {
+    return await this.menuService.info(id)
+  }
+
   @Post()
   async create(@Body() dto: CreateMenuDto) {
     await this.menuService.create(dto)
@@ -22,5 +27,11 @@ export class MenuController {
   @Put(':id')
   async update(@IdParam() id: number, @Body() dto: UpdateMenuDto) {
     await this.menuService.update(id, dto)
+  }
+
+  @Delete(':id')
+  async delete(@IdParam() id: number) {
+    const children = await this.menuService.findChildren(id)
+    await this.menuService.deleteByIds([id, ...children.map(c => c.id)])
   }
 }

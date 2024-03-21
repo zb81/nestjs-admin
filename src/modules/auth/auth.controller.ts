@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Headers, Ip, Patch, Post, Query } from '@nestjs/common'
+import { Body, Controller, Get, Headers, Ip, Post, Put, Query } from '@nestjs/common'
 
 import { Public } from '~/decorators/public.decorator'
 import { CheckUsernameDto, LoginDto, RefreshDto, RegisterDto, ResetPasswordDto } from '~/modules/auth/auth.dto'
@@ -40,7 +40,7 @@ export class AuthController {
     return await this.authService.checkUsername(username)
   }
 
-  @Patch('resetpassword')
+  @Put('resetpassword')
   async resetPassword(@Body() dto: ResetPasswordDto) {
     const { username, email, code, password } = dto
     await this.mailService.checkCode(email, code)
