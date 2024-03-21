@@ -13,6 +13,10 @@ export class RoleService {
     @InjectRepository(MenuEntity) private menuRepository: Repository<MenuEntity>,
   ) {}
 
+  async list() {
+    return await this.roleRepository.find()
+  }
+
   async create(dto: CreateRoleDto) {
     const { menuIds, ...data } = dto
     const role = await this.roleRepository.save({

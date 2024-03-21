@@ -1,6 +1,6 @@
 import { IsIn, IsInt, IsOptional, IsString, Min, MinLength, ValidateIf } from 'class-validator'
 
-export class CreateMenuDto {
+export class MenuDto {
   @IsIn([0, 1, 2])
   type: number
 
@@ -48,5 +48,3 @@ export class CreateMenuDto {
   @IsOptional()
   component: string
 }
-
-export class UpdateMenuDto extends CreateMenuDto {}
