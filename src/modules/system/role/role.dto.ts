@@ -1,6 +1,8 @@
-import { IsArray, IsIn, IsOptional, IsString, Matches, MinLength } from 'class-validator'
+import { IsArray, IsIn, IsInt, IsOptional, IsString, Matches, MinLength } from 'class-validator'
 
-export class CreateRoleDto {
+import { PaginationDto } from '~/common/dto'
+
+export class RoleDto {
   @IsString()
   @MinLength(2, { message: '角色名称不能少于 2 个字符' })
   name: string
@@ -20,4 +22,14 @@ export class CreateRoleDto {
   @IsOptional()
   @IsArray()
   menuIds?: number[]
+}
+
+export class RoleQueryDto extends PaginationDto {
+  @IsOptional()
+  @IsString()
+  name?: string
+
+  @IsOptional()
+  @IsInt()
+  status?: number
 }

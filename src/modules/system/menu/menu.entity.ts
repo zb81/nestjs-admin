@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToMany, Relation } from 'typeorm'
 
-import { CommonEntity } from '~/common/base.entity'
+import { CommonEntity } from '~/common/common.entity'
 import { RoleEntity } from '~/modules/system/role/role.entity'
 
 @Entity({ name: 'sys_menu' })

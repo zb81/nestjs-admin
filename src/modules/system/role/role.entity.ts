@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, Relation } from 'typeorm'
 
-import { CommonEntity } from '~/common/base.entity'
+import { CommonEntity } from '~/common/common.entity'
 import { MenuEntity } from '~/modules/system/menu/menu.entity'
 import { UserEntity } from '~/modules/system/user/user.entity'
 

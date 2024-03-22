@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, Relation } from 'typeorm'
 
-import { CommonEntity } from '~/common/base.entity'
+import { CommonEntity } from '~/common/common.entity'
 import { UserEntity } from '~/modules/system/user/user.entity'
 
 @Entity('sys_login_log')

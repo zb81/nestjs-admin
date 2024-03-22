@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { In, Repository } from 'typeorm'
+import { In, Like, Repository } from 'typeorm'
 
+import { createRepoPagination } from '~/helper/pagination'
 import { MenuEntity } from '~/modules/system/menu/menu.entity'
-import { CreateRoleDto } from '~/modules/system/role/role.dto'
-import { RoleEntity } from '~/modules/system/role/role.entity'
+
+import { RoleDto, RoleQueryDto } from './role.dto'
+import { RoleEntity } from './role.entity'
 
 @Injectable()
 export class RoleService {
@@ -13,11 +15,21 @@ export class RoleService {
     @InjectRepository(MenuEntity) private menuRepository: Repository<MenuEntity>,
   ) {}
 
-  async list() {
-    return await this.roleRepository.find()
+  async list(dto: RoleQueryDto) {
+    const { name, status, sortField, sortOrder, pageNo, pageSize } = dto
+
+    return await createRepoPagination({
+      repository: this.roleRepository,
+      pageNo,
+      pageSize,
+      where: { status, name: name ? Like(`%${name}%`) : undefined },
+      order: {
+        [sortField || 'id']: sortOrder || 'ASC',
+      },
+    })
   }
 
-  async create(dto: CreateRoleDto) {
+  async create(dto: RoleDto) {
     const { menuIds, ...data } = dto
     const role = await this.roleRepository.save({
       ...data,

@@ -1,7 +1,7 @@
 import { Exclude } from 'class-transformer'
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, Relation } from 'typeorm'
 
-import { CommonEntity } from '~/common/base.entity'
+import { CommonEntity } from '~/common/common.entity'
 import { DeptEntity } from '~/modules/system/dept/dept.entity'
 import { RoleEntity } from '~/modules/system/role/role.entity'
 
