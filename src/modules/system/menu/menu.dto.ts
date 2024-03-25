@@ -1,5 +1,7 @@
 import { IsIn, IsInt, IsOptional, IsString, Min, MinLength, ValidateIf } from 'class-validator'
 
+import { SortDto } from '~/common/dto'
+
 export class MenuDto {
   @IsIn([0, 1, 2])
   type: number
@@ -47,4 +49,14 @@ export class MenuDto {
   @IsString()
   @IsOptional()
   component: string
+}
+
+export class MenuQueryDto extends SortDto {
+  @IsOptional()
+  @IsString()
+  name?: string
+
+  @IsOptional()
+  @IsInt()
+  status?: number
 }

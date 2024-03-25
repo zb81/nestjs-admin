@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { In, IsNull, Not, Repository } from 'typeorm'
+import { In, IsNull, Like, Not, Repository } from 'typeorm'
 
 import { CommonStatus, ROOT_ROLE_ID } from '~/constants'
 
-import { MenuDto } from '~/modules/system/menu/menu.dto'
-import { MenuEntity } from '~/modules/system/menu/menu.entity'
 import { RoleService } from '~/modules/system/role/role.service'
 import { buildTreeFromList } from '~/utils/tree'
+
+import { MenuDto, MenuQueryDto } from './menu.dto'
+import { MenuEntity } from './menu.entity'
 
 @Injectable()
 export class MenuService {
@@ -15,14 +16,18 @@ export class MenuService {
     @InjectRepository(MenuEntity)
     private readonly menuRepository: Repository<MenuEntity>,
     private readonly roleService: RoleService,
-  ) {}
+  ) { }
 
-  async tree(name?: string) {
-    const list = await this.menuRepository
-      .createQueryBuilder('menu')
-      .where('menu.name like :name', { name: `%${name || ''}%` })
-      .orderBy('menu.order_no', 'ASC')
-      .getMany()
+  async tree(dto: MenuQueryDto) {
+    const { name, status, sortField, sortOrder } = dto
+
+    const list = await this.menuRepository.find({
+      where: { status, name: name ? Like(`%${name}%`) : undefined },
+      order: {
+        [sortField || 'id']: sortOrder || 'ASC',
+      },
+    })
+
     return buildTreeFromList(list)
   }
 

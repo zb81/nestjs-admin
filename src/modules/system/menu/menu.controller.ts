@@ -1,8 +1,7 @@
 import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common'
 
 import { IdParam } from '~/decorators/id-param.decorator'
-import { QueryDeptDto } from '~/modules/system/dept/dept.dto'
-import { MenuDto } from '~/modules/system/menu/menu.dto'
+import { MenuDto, MenuQueryDto } from '~/modules/system/menu/menu.dto'
 import { MenuService } from '~/modules/system/menu/menu.service'
 
 @Controller('menu')
@@ -10,8 +9,8 @@ export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
   @Get('tree')
-  async tree(@Query() dto: QueryDeptDto) {
-    return await this.menuService.tree(dto.name)
+  async tree(@Query() dto: MenuQueryDto) {
+    return await this.menuService.tree(dto)
   }
 
   @Get(':id')
