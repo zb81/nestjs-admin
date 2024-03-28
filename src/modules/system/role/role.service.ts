@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { In, Like, Repository } from 'typeorm'
 
+import { BizException } from '~/common/biz.exception'
+import { BizError } from '~/constants/biz-error'
 import { createRepoPagination } from '~/helper/pagination'
 import { MenuEntity } from '~/modules/system/menu/menu.entity'
 
@@ -45,5 +47,17 @@ export class RoleService {
     if (roles && roles.length)
       return roles.map(r => ({ id: r.id, value: r.value }))
     return []
+  }
+
+  async deleteById(id: number) {
+    const role = await this.roleRepository.findOne({
+      where: { id },
+      relations: ['users'],
+    })
+    if (role) {
+      if (role.users.length)
+        throw new BizException(BizError.ROLE_HAS_USER)
+      await role.remove()
+    }
   }
 }

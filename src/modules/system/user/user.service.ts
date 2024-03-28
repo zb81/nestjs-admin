@@ -17,7 +17,10 @@ export class UserService {
   ) { }
 
   async getUserInfo(id: number) {
-    const user = await this.userRepository.findOneBy({ id })
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['roles'],
+    })
     delete user.password
     return user
   }

@@ -10,4 +10,6 @@ export enum BizError {
   LOGIN_ELSEWHERE = '20005:账号在别处登录',
   USER_NOT_EXIST = '20006:未查询到用户',
   NOT_ALLOWED = '20007:没有权限',
+
+  ROLE_HAS_USER = '30001:存在关联用户，无法删除',
 }

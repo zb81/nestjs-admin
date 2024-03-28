@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common'
+
+import { IdParam } from '~/decorators/id-param.decorator'
 
 import { RoleDto, RoleQueryDto } from './role.dto'
 import { RoleService } from './role.service'
@@ -17,5 +19,10 @@ export class RoleController {
   @Post()
   async create(@Body() dto: RoleDto) {
     await this.roleService.create(dto)
+  }
+
+  @Delete(':id')
+  async delete(@IdParam() id: number) {
+    return await this.roleService.deleteById(id)
   }
 }
